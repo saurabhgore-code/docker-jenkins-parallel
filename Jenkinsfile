@@ -6,28 +6,26 @@ pipeline {
     stages
 	{	
 	stage('clone the repo')
-parallel  {
+		{ 
+	parallel {
+		stage('build image')
 		{
 			steps{	
 	 sh 'git clone https://github.com/saurabhgore-code/47billion.git'
 			}
 		}
-}
-        stage('build image')
-parallel {
-        {
+	{
         steps{ 
             sh 'docker build -t mysql-image .'
         }
         }
-}
         stage('run nginx image')
-parallel {
+
         {
         steps{
             sh 'docker run -dt mysql'
         }
         }
-        }
+}
 }
 }
